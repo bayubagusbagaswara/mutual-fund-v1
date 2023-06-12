@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FaqRepository extends JpaRepository<Faq, Long> {
@@ -26,4 +27,7 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
     List<Faq> getAllByIsDeletedFalse();
 
     List<Faq> findByIsDeletedFalse();
+
+    Optional<Faq> findByCode(String code);
+
 }
