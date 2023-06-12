@@ -14,4 +14,6 @@ public interface FaqCategoryRepository extends JpaRepository<FaqCategory, Long> 
 
     List<FaqCategory> findAllByModule(String module);
 
+    Boolean existsByCategoryCode(String categoryCode);
+
 }
