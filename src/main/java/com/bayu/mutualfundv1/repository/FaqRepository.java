@@ -25,4 +25,5 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
     @Query(value = "SELECT * FROM Faq f WHERE f.is_deleted = false", nativeQuery = true)
     List<Faq> getAllByIsDeletedFalse();
 
+    List<Faq> findByIsDeletedFalse();
 }
