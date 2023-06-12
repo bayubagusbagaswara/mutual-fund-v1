@@ -15,4 +15,8 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
 
     @Query(value = "SELECT * FROM Faq f ORDER BY f.popular_order LIMIT = :limit", nativeQuery = true)
     List<Faq> getAllFaqOrderByPopularLimit(@Param("limit") Integer limit);
+
+    @Query(value = "SELECT * FROM Faq f ORDER BY f.popular_order ASC LIMIT = :limit", nativeQuery = true)
+    List<Faq> getAllFaqOrderByPopularTop5(@Param("limit") Integer limit);
+
 }
