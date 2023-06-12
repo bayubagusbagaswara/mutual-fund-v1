@@ -22,4 +22,7 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
     @Query(value = "SELECT * FROM Faq f ORDER BY f.popular_order ASC LIMIT = :limit OFFSET = :offset", nativeQuery = true)
     List<Faq> getAllFaqOrderByPopularBottom5(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
+    @Query(value = "SELECT * FROM Faq f WHERE f.is_deleted = false", nativeQuery = true)
+    List<Faq> getAllByIsDeletedFalse();
+
 }
