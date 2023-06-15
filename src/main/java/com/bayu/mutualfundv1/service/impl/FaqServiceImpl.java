@@ -18,4 +18,8 @@ public class FaqServiceImpl implements FaqService {
         this.faqRepository = faqRepository;
     }
 
+    @Override
+    public FaqCategoryDTO createFaqCategory(CreateFaqCategoryRequest request) {
+        return null;
+    }
 }
