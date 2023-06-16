@@ -13,4 +13,6 @@ public interface FaqService {
 
     List<FaqCategoryDTO> getAllFaqCategoriesByModule(String module);
 
+    FaqCategoryDTO getFaqCategoryByCode(String code);
+
 }
