@@ -22,4 +22,5 @@ public interface FaqService {
 
     FaqDTO updateSeenByUser(String faqCode, Integer seenByUser);
 
+    List<FaqDTO> getAllFaq();
 }
