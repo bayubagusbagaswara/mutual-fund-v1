@@ -25,4 +25,6 @@ public interface FaqService {
     List<FaqDTO> getAllFaq();
 
     List<FaqDTO> getAllFaqPopular();
+
+    List<FaqDTO> getFaqPopularTop5();
 }
