@@ -1,8 +1,6 @@
 package com.bayu.mutualfundv1.service;
 
-import com.bayu.mutualfundv1.dto.faq.CreateFaqCategoryRequest;
-import com.bayu.mutualfundv1.dto.faq.FaqCategoryDTO;
-import com.bayu.mutualfundv1.dto.faq.GetFaqTotalResponse;
+import com.bayu.mutualfundv1.dto.faq.*;
 
 import java.util.List;
 
@@ -19,5 +17,7 @@ public interface FaqService {
     GetFaqTotalResponse getFaqTotal();
 
     GetFaqTotalResponse getFaqTotalNew();
+
+    FaqDTO createFaq(CreateFaqRequest createFaqRequest);
 
 }
