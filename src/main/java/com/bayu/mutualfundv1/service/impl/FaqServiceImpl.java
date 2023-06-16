@@ -9,6 +9,7 @@ import com.bayu.mutualfundv1.repository.FaqRepository;
 import com.bayu.mutualfundv1.service.FaqService;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -31,7 +32,18 @@ public class FaqServiceImpl implements FaqService {
 
     @Override
     public FaqCategoryDTO createFaqCategory(CreateFaqCategoryRequest request) {
-        return null;
+        FaqCategory faqCategory = FaqCategory.builder()
+                .categoryCode(request.getCategoryCode())
+                .name(request.getName())
+                .module(request.getModule())
+                .title(request.getTitle())
+                .build();
+
+        faqCategory.setCreatedDate(Instant.now());
+
+        faqCategoryRepository.save(faqCategory);
+
+        return mapToFaqCategoryDTO(faqCategory);
     }
 
     @Override
