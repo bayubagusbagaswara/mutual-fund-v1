@@ -14,6 +14,8 @@ public interface FaqService {
 
     FaqCategoryDTO getFaqCategoryByCode(String code);
 
+    List<GetAllFaqCategoryByModule> getFaqCategoriesByModule(String module);
+
     GetFaqTotalResponse getFaqTotal();
 
     GetFaqTotalResponse getFaqTotalNew();
