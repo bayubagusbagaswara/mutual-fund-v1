@@ -7,6 +7,8 @@ import com.bayu.mutualfundv1.repository.FaqRepository;
 import com.bayu.mutualfundv1.service.FaqService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FaqServiceImpl implements FaqService {
 
@@ -20,6 +22,11 @@ public class FaqServiceImpl implements FaqService {
 
     @Override
     public FaqCategoryDTO createFaqCategory(CreateFaqCategoryRequest request) {
+        return null;
+    }
+
+    @Override
+    public List<FaqCategoryDTO> getAllFaqCategoriesByModule(String module) {
         return null;
     }
 }
