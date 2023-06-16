@@ -18,4 +18,6 @@ public interface FaqService {
 
     GetFaqTotalResponse getFaqTotal();
 
+    GetFaqTotalResponse getFaqTotalNew();
+
 }
