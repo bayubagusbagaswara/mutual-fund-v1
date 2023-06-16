@@ -1,7 +1,6 @@
 package com.bayu.mutualfundv1.service.impl;
 
-import com.bayu.mutualfundv1.dto.faq.CreateFaqCategoryRequest;
-import com.bayu.mutualfundv1.dto.faq.FaqCategoryDTO;
+import com.bayu.mutualfundv1.dto.faq.*;
 import com.bayu.mutualfundv1.exception.DataNotFoundException;
 import com.bayu.mutualfundv1.model.FaqCategory;
 import com.bayu.mutualfundv1.repository.FaqCategoryRepository;
@@ -56,6 +55,24 @@ public class FaqServiceImpl implements FaqService {
         FaqCategory faqCategory = faqCategoryRepository.findByCategoryCode(code)
                 .orElseThrow(() -> new DataNotFoundException("Faq Category with code : " + code + "not found"));
         return mapToFaqCategoryDTO(faqCategory);
+    }
+
+    @Override
+    public List<GetAllFaqCategoryByModule> getFaqCategoriesByModule(String module) {
+        List<FaqCategory> faqCategoryList = faqCategoryRepository.findAllByModule(module);
+        List<FaqDTO> faqList = getAllFaq();
+
+        List<GetAllFaqCategoryByModule> faqCategories = mapToFaqCategoriesByModule(faqCategoryList);
+
+        for (int i = 0; i < faqCategoryList.size(); i++) {
+            for (FaqDTO faqDTO : faqList) {
+                if (faqCategoryList.get(i).getCategoryCode().equalsIgnoreCase(faqDTO.getFaqCategoryCode())) {
+                    List<FaqDTO> faqDTOList = getFaqByFaqCategoryCode(faqCategoryList.get(i).getCategoryCode());
+                    faqCategories.get(i).setFaqDTOList(faqDTOList);
+                }
+            }
+        }
+        return faqCategories;
     }
 
     private static FaqCategoryDTO mapToFaqCategoryDTO(FaqCategory faqCategory) {
