@@ -2,6 +2,7 @@ package com.bayu.mutualfundv1.service.impl;
 
 import com.bayu.mutualfundv1.dto.faq.CreateFaqCategoryRequest;
 import com.bayu.mutualfundv1.dto.faq.FaqCategoryDTO;
+import com.bayu.mutualfundv1.exception.DataNotFoundException;
 import com.bayu.mutualfundv1.repository.FaqCategoryRepository;
 import com.bayu.mutualfundv1.repository.FaqRepository;
 import com.bayu.mutualfundv1.service.FaqService;
@@ -18,6 +19,13 @@ public class FaqServiceImpl implements FaqService {
     public FaqServiceImpl(FaqCategoryRepository faqCategoryRepository, FaqRepository faqRepository) {
         this.faqCategoryRepository = faqCategoryRepository;
         this.faqRepository = faqRepository;
+    }
+
+    @Override
+    public void checkCategoryCodeIsExists(String categoryCode) {
+        if (faqCategoryRepository.existsByCategoryCode(categoryCode)) {
+            throw new DataNotFoundException("Faq Category with code : " + categoryCode + " not found");
+        }
     }
 
     @Override
