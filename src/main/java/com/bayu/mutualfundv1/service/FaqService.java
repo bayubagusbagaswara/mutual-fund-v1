@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface FaqService {
 
+    void checkCategoryCodeIsExists(String categoryCode);
+
     FaqCategoryDTO createFaqCategory(CreateFaqCategoryRequest request);
 
     List<FaqCategoryDTO> getAllFaqCategoriesByModule(String module);
