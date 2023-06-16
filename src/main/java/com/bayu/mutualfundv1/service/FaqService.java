@@ -31,4 +31,6 @@ public interface FaqService {
     List<FaqDTO> getFaqPopularBottom5();
 
     List<FaqDTO> getFaqByFaqCategoryCode(String faqCategoryCode);
+
+    FaqDTO getFaqByCode(String code);
 }
