@@ -20,4 +20,6 @@ public interface FaqService {
 
     FaqDTO createFaq(CreateFaqRequest createFaqRequest);
 
+    FaqDTO updateSeenByUser(String faqCode, Integer seenByUser);
+
 }
