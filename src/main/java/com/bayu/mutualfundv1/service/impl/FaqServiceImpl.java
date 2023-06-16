@@ -51,6 +51,13 @@ public class FaqServiceImpl implements FaqService {
         return null;
     }
 
+    @Override
+    public FaqCategoryDTO getFaqCategoryByCode(String code) {
+        FaqCategory faqCategory = faqCategoryRepository.findByCategoryCode(code)
+                .orElseThrow(() -> new DataNotFoundException("Faq Category with code : " + code + "not found"));
+        return mapToFaqCategoryDTO(faqCategory);
+    }
+
     private static FaqCategoryDTO mapToFaqCategoryDTO(FaqCategory faqCategory) {
         return FaqCategoryDTO.builder()
                 .id(String.valueOf(faqCategory.getId()))
