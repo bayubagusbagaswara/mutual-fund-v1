@@ -146,6 +146,14 @@ public class FaqServiceImpl implements FaqService {
         return null;
     }
 
+    @Override
+    public List<FaqDTO> getAllFaq() {
+        // semua kategori FAQ
+//        List<Faq> faqList = faqRepository.findByIsDeletedFalse();
+        List<Faq> faqList = faqRepository.getAllByIsDeletedFalse();
+        return mapToFaqDTOList(faqList);
+    }
+
     private static FaqCategoryDTO mapToFaqCategoryDTO(FaqCategory faqCategory) {
         return FaqCategoryDTO.builder()
                 .id(String.valueOf(faqCategory.getId()))
