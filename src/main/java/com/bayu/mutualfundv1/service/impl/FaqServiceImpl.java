@@ -124,6 +124,23 @@ public class FaqServiceImpl implements FaqService {
                 .build();
     }
 
+    @Override
+    public FaqDTO createFaq(CreateFaqRequest createFaqRequest) {
+        checkCategoryCodeIsExists(createFaqRequest.getFaqCategoryCode());
+        Faq faq = Faq.builder()
+                .code(createFaqRequest.getFaqCode())
+                .categoryCode(createFaqRequest.getFaqCategoryCode())
+                .question(createFaqRequest.getQuestion())
+                .answer(createFaqRequest.getAnswer())
+                .seenByUser(createFaqRequest.getSeenByUser())
+                .build();
+        faq.setCreatedDate(Instant.now());
+
+        faqRepository.save(faq);
+
+        return mapToFaqDTO(faq);
+    }
+
     private static FaqCategoryDTO mapToFaqCategoryDTO(FaqCategory faqCategory) {
         return FaqCategoryDTO.builder()
                 .id(String.valueOf(faqCategory.getId()))
