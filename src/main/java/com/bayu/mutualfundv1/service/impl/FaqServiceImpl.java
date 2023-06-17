@@ -176,6 +176,13 @@ public class FaqServiceImpl implements FaqService {
     }
 
     @Override
+    public FaqDTO getFaqByCode(String code) {
+        Faq faq = faqRepository.findByCode(code)
+                .orElseThrow(() -> new RuntimeException("Faq with code : " + code + "not found"));
+        return mapToFaqDTO(faq);
+    }
+
+    @Override
     public List<FaqDTO> getAllFaqPopular() {
         // ambil get all, urutkan by popular secara ascending lalu ambil 10
         // 10 data tersebut nanti di pecah menjadi 2 bagian, dan dimasukkan kedalam object yang berbeda
