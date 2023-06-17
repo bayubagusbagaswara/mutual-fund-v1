@@ -170,6 +170,12 @@ public class FaqServiceImpl implements FaqService {
     }
 
     @Override
+    public List<FaqDTO> getFaqByFaqCategoryCode(String faqCategoryCode) {
+        List<Faq> faqList = faqRepository.findAllByCategoryCode(faqCategoryCode);
+        return mapToFaqDTOList(faqList);
+    }
+
+    @Override
     public List<FaqDTO> getAllFaqPopular() {
         // ambil get all, urutkan by popular secara ascending lalu ambil 10
         // 10 data tersebut nanti di pecah menjadi 2 bagian, dan dimasukkan kedalam object yang berbeda
