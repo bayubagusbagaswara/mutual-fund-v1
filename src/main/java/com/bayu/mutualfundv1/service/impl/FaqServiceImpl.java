@@ -2,6 +2,7 @@ package com.bayu.mutualfundv1.service.impl;
 
 import com.bayu.mutualfundv1.dto.faq.*;
 import com.bayu.mutualfundv1.exception.DataNotFoundException;
+import com.bayu.mutualfundv1.model.Faq;
 import com.bayu.mutualfundv1.model.FaqCategory;
 import com.bayu.mutualfundv1.repository.FaqCategoryRepository;
 import com.bayu.mutualfundv1.repository.FaqRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FaqServiceImpl implements FaqService {
@@ -83,6 +85,61 @@ public class FaqServiceImpl implements FaqService {
                 .module(faqCategory.getModule())
                 .createdDate(faqCategory.getCreatedDate())
                 .build();
+    }
+
+    private static List<FaqCategoryDTO> mapToFaqCategoryDTOList(List<FaqCategory> faqCategoryList) {
+        return faqCategoryList.stream()
+                .map(FaqServiceImpl::mapToFaqCategoryDTO)
+                .collect(Collectors.toList());
+    }
+
+    private static FaqDTO mapToFaqDTO(Faq faq) {
+        return FaqDTO.builder()
+                .id(String.valueOf(faq.getId()))
+                .faqCode(faq.getCode())
+                .question(faq.getQuestion())
+                .answer(faq.getAnswer())
+                .seenByUser(faq.getSeenByUser())
+                .faqCategoryCode(faq.getCategoryCode())
+                .createdDate(faq.getCreatedDate())
+                .build();
+    }
+
+    private static List<FaqDTO> mapToFaqDTOList(List<Faq> faqList) {
+        return faqList.stream()
+                .map(FaqServiceImpl::mapToFaqDTO)
+                .collect(Collectors.toList());
+    }
+
+    private static GetAllFaqCategoryByModule mapToGetFaqCategoriesByModuleResponse(FaqCategory faqCategory, List<Faq> faqList) {
+        return GetAllFaqCategoryByModule.builder()
+                .id(String.valueOf(faqCategory.getId()))
+                .categoryCode(faqCategory.getCategoryCode())
+                .name(faqCategory.getName())
+                .module(faqCategory.getModule())
+                .createdDate(faqCategory.getCreatedDate())
+                // find all faq by category code
+                // map dari List<Faq> ke List<FaqDTO>
+                .faqDTOList(mapToFaqDTOList(faqList))
+                .build();
+
+    }
+
+    private static GetAllFaqCategoryByModule mapToGetFaqCategories(FaqCategory faqCategory) {
+        return GetAllFaqCategoryByModule.builder()
+                .id(String.valueOf(faqCategory.getId()))
+                .categoryCode(faqCategory.getCategoryCode())
+                .name(faqCategory.getName())
+                .module(faqCategory.getModule())
+                .createdDate(faqCategory.getCreatedDate())
+                .build();
+
+    }
+
+    private static List<GetAllFaqCategoryByModule> mapToFaqCategoriesByModule(List<FaqCategory> faqCategoryList) {
+        return faqCategoryList.stream()
+                .map(FaqServiceImpl::mapToGetFaqCategories)
+                .collect(Collectors.toList());
     }
 
 }
