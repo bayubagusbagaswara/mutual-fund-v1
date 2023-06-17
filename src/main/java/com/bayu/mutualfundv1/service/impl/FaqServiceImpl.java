@@ -141,6 +141,11 @@ public class FaqServiceImpl implements FaqService {
         return mapToFaqDTO(faq);
     }
 
+    @Override
+    public FaqDTO updateSeenByUser(String faqCode, Integer seenByUser) {
+        return null;
+    }
+
     private static FaqCategoryDTO mapToFaqCategoryDTO(FaqCategory faqCategory) {
         return FaqCategoryDTO.builder()
                 .id(String.valueOf(faqCategory.getId()))
