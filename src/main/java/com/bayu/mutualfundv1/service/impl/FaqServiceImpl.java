@@ -149,7 +149,6 @@ public class FaqServiceImpl implements FaqService {
     @Override
     public List<FaqDTO> getAllFaq() {
         // semua kategori FAQ
-//        List<Faq> faqList = faqRepository.findByIsDeletedFalse();
         List<Faq> faqList = faqRepository.getAllByIsDeletedFalse();
         return mapToFaqDTOList(faqList);
     }
@@ -201,12 +200,6 @@ public class FaqServiceImpl implements FaqService {
                 .build();
     }
 
-    private static List<FaqCategoryDTO> mapToFaqCategoryDTOList(List<FaqCategory> faqCategoryList) {
-        return faqCategoryList.stream()
-                .map(FaqServiceImpl::mapToFaqCategoryDTO)
-                .collect(Collectors.toList());
-    }
-
     private static FaqDTO mapToFaqDTO(Faq faq) {
         return FaqDTO.builder()
                 .id(String.valueOf(faq.getId()))
@@ -223,20 +216,6 @@ public class FaqServiceImpl implements FaqService {
         return faqList.stream()
                 .map(FaqServiceImpl::mapToFaqDTO)
                 .collect(Collectors.toList());
-    }
-
-    private static GetAllFaqCategoryByModule mapToGetFaqCategoriesByModuleResponse(FaqCategory faqCategory, List<Faq> faqList) {
-        return GetAllFaqCategoryByModule.builder()
-                .id(String.valueOf(faqCategory.getId()))
-                .categoryCode(faqCategory.getCategoryCode())
-                .name(faqCategory.getName())
-                .module(faqCategory.getModule())
-                .createdDate(faqCategory.getCreatedDate())
-                // find all faq by category code
-                // map dari List<Faq> ke List<FaqDTO>
-                .faqDTOList(mapToFaqDTOList(faqList))
-                .build();
-
     }
 
     private static GetAllFaqCategoryByModule mapToGetFaqCategories(FaqCategory faqCategory) {
