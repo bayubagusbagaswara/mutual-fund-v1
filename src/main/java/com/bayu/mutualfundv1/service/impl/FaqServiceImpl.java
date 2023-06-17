@@ -77,6 +77,16 @@ public class FaqServiceImpl implements FaqService {
         return faqCategories;
     }
 
+    @Override
+    public GetFaqTotalResponse getFaqTotal() {
+        String module = "REKSADANA";
+        return GetFaqTotalResponse.builder()
+                .faqPopularTop5(getFaqPopularTop5())
+                .faqPopularBottom5(getFaqPopularBottom5())
+                .faqCategory(getFaqCategoriesByModule(module))
+                .build();
+    }
+
     private static FaqCategoryDTO mapToFaqCategoryDTO(FaqCategory faqCategory) {
         return FaqCategoryDTO.builder()
                 .id(String.valueOf(faqCategory.getId()))
