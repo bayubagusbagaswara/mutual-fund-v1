@@ -10,6 +10,8 @@ import com.bayu.mutualfundv1.service.FaqService;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,6 +86,41 @@ public class FaqServiceImpl implements FaqService {
                 .faqPopularTop5(getFaqPopularTop5())
                 .faqPopularBottom5(getFaqPopularBottom5())
                 .faqCategory(getFaqCategoriesByModule(module))
+                .build();
+    }
+
+    @Override
+    public GetFaqTotalResponse getFaqTotalNew() {
+        String module = "REKSADANA";
+
+        List<FaqCategory> faqCategoryList = faqCategoryRepository.findAllByModule(module);
+        List<FaqDTO> faqList = getAllFaq();
+
+        List<FaqDTO> faqDTOListSorted = new ArrayList<>();
+
+        List<GetAllFaqCategoryByModule> faqCategories = mapToFaqCategoriesByModule(faqCategoryList);
+
+        for (int i = 0; i < faqCategoryList.size(); i++) {
+            for (FaqDTO faqDTO : faqList) {
+                if (faqCategoryList.get(i).getCategoryCode().equalsIgnoreCase(faqDTO.getFaqCategoryCode())) {
+                    faqDTOListSorted.addAll(getFaqByFaqCategoryCode(faqCategoryList.get(i).getCategoryCode())
+                            .stream()
+                            // reversed is mean Descending
+                            .sorted(Comparator.comparing(FaqDTO::getSeenByUser).reversed())
+                            .toList());
+                    faqCategories.get(i).setFaqDTOList(faqDTOListSorted);
+                }
+            }
+        }
+
+        List<FaqDTO> faqPopularTop5 = faqDTOListSorted.stream().limit(5).collect(Collectors.toList());
+
+        List<FaqDTO> faqPopularBottom5 = faqDTOListSorted.stream().skip(5).limit(5).collect(Collectors.toList());
+
+        return GetFaqTotalResponse.builder()
+                .faqPopularTop5(faqPopularTop5)
+                .faqPopularBottom5(faqPopularBottom5)
+                .faqCategory(faqCategories)
                 .build();
     }
 
