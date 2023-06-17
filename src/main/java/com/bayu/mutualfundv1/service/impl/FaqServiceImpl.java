@@ -162,6 +162,14 @@ public class FaqServiceImpl implements FaqService {
     }
 
     @Override
+    public List<FaqDTO> getFaqPopularBottom5() {
+        Integer limit = 5;
+        Integer offset = 5;
+        List<Faq> faqList = faqRepository.getAllFaqOrderByPopularBottom5(limit, offset);
+        return mapToFaqDTOList(faqList);
+    }
+
+    @Override
     public List<FaqDTO> getAllFaqPopular() {
         // ambil get all, urutkan by popular secara ascending lalu ambil 10
         // 10 data tersebut nanti di pecah menjadi 2 bagian, dan dimasukkan kedalam object yang berbeda
