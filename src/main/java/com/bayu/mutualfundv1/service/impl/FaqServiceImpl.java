@@ -154,6 +154,15 @@ public class FaqServiceImpl implements FaqService {
         return mapToFaqDTOList(faqList);
     }
 
+    @Override
+    public List<FaqDTO> getAllFaqPopular() {
+        // ambil get all, urutkan by popular secara ascending lalu ambil 10
+        // 10 data tersebut nanti di pecah menjadi 2 bagian, dan dimasukkan kedalam object yang berbeda
+        Integer limit = 10;
+        List<Faq> faqList = faqRepository.getAllFaqOrderByPopularLimit(limit);
+        return mapToFaqDTOList(faqList);
+    }
+
     private static FaqCategoryDTO mapToFaqCategoryDTO(FaqCategory faqCategory) {
         return FaqCategoryDTO.builder()
                 .id(String.valueOf(faqCategory.getId()))
